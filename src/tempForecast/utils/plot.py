@@ -9,7 +9,6 @@ def plot_temperature_distribution(df):
     # Extraire les températures pour chaque mois
     month_temps = [df[df['month'] == month]['température'].dropna().values for month in month_names]
 
-    # Estimation de la densité et création du graphique
     min_temp = df['température'].min()
     max_temp = df['température'].max()
     xs = np.linspace(min_temp - 3, max_temp + 3, 200)
