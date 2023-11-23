@@ -1,2 +1,27 @@
 pandas
+flake8 
+isort
+autoimport
+black
+requests
+bs4;
+seaborn
+matplotlib
+plotly
+nbformat
+scipy
+scikit-learn
+statsmodels
+statsforecast
+mapie
+catboost
+feature-engine
+featuretools
+mlforecast
+lightgbm 
+datasetsforecast
+ensure
+python-box
+pyYAML
+dvc
 -e .

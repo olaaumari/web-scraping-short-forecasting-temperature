@@ -1,0 +1,45 @@
+stages:
+  data_ingestion:
+    cmd: python src/tempForecast/pipeline/stage_01_data_ingestion.py
+    deps:
+      - src/tempForecast/pipeline/stage_01_data_ingestion.py
+      - config/config.yaml
+    always_changed: true
+    outs:
+      - artifacts/data_ingestion/data.csv
+      
+  prepare_base_model:
+      cmd: python src/tempForecast/pipeline/stage_02_prepare_base_model.py
+      deps:
+        - src/tempForecast/pipeline/stage_02_prepare_base_model.py
+        - config/config.yaml
+      outs:
+        - artifacts/prepare_base_model
+
+
+
+  training:
+    cmd: python src/tempForecast/pipeline/stage_03_training.py
+    deps:
+      - src/tempForecast/pipeline/stage_03_training.py
+      - config/config.yaml
+      - artifacts/data_ingestion/train.csv
+      - artifacts/prepare_base_model
+    always_changed: true
+    outs:
+      - artifacts/training/model.txt
+
+
+  
+
+  evaluation:
+    cmd: python src/tempForecast/pipeline/stage_04_evaluation.py
+    deps:
+      - src/tempForecast/pipeline/stage_04_evaluation.py
+      - config/config.yaml
+      - artifacts/data_ingestion/test.csv
+      - artifacts/training/model.txt
+    always_changed: true
+    metrics:
+    - scores.json:
+        cache: false

@@ -1,0 +1,84 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/tempForecast/pipeline/stage_01_data_ingestion.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 8f99da6091353aa6c7c201e96045b708
+      size: 785
+    - path: src/tempForecast/pipeline/stage_01_data_ingestion.py
+      hash: md5
+      md5: 24036d3db7370e8e715f801d1026301a
+      size: 1644
+    outs:
+    - path: artifacts/data_ingestion/data.csv
+      hash: md5
+      md5: e8a20d4409d7e3ec1d250c2c8d23c6ab
+      size: 3869809
+  prepare_base_model:
+    cmd: python src/tempForecast/pipeline/stage_02_prepare_base_model.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 8f99da6091353aa6c7c201e96045b708
+      size: 785
+    - path: src/tempForecast/pipeline/stage_02_prepare_base_model.py
+      hash: md5
+      md5: 5dc478086ec43ceb0881c81ec4ee5684
+      size: 1027
+    outs:
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: 7eb6eac4a8be4be6ead5c47575cfb136.dir
+      size: 650
+      nfiles: 1
+  training:
+    cmd: python src/tempForecast/pipeline/stage_03_training.py
+    deps:
+    - path: artifacts/data_ingestion/train.csv
+      hash: md5
+      md5: 3540e5be98ff497cfdee99873b927d0a
+      size: 5028227
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: 7eb6eac4a8be4be6ead5c47575cfb136.dir
+      size: 650
+      nfiles: 1
+    - path: config/config.yaml
+      hash: md5
+      md5: 8f99da6091353aa6c7c201e96045b708
+      size: 785
+    - path: src/tempForecast/pipeline/stage_03_training.py
+      hash: md5
+      md5: d7c4217a1b70b9d98041dd160a61ca52
+      size: 951
+    outs:
+    - path: artifacts/training/model.txt
+      hash: md5
+      md5: 3ddec3b93706dd6be9b17875c2420d06
+      size: 295309
+  evaluation:
+    cmd: python src/tempForecast/pipeline/stage_04_evaluation.py
+    deps:
+    - path: artifacts/data_ingestion/test.csv
+      hash: md5
+      md5: 126aaf985f5743275b347302b90f0240
+      size: 31892
+    - path: artifacts/training/model.txt
+      hash: md5
+      md5: 3ddec3b93706dd6be9b17875c2420d06
+      size: 295309
+    - path: config/config.yaml
+      hash: md5
+      md5: 8f99da6091353aa6c7c201e96045b708
+      size: 785
+    - path: src/tempForecast/pipeline/stage_04_evaluation.py
+      hash: md5
+      md5: b93ef72cd304fcef6256b3a772697492
+      size: 862
+    outs:
+    - path: scores.json
+      hash: md5
+      md5: 1a884bddf2348e30557fb2bb61497180
+      size: 103

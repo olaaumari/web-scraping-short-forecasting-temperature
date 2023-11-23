@@ -1,0 +1,24 @@
+artifacts_root: artifacts
+
+
+data_ingestion:
+  root_dir: artifacts/data_ingestion
+  local_data_file: artifacts/data_ingestion/data.csv
+  root_dir_train : artifacts/data_ingestion/train.csv
+  root_dir_test : artifacts/data_ingestion/test.csv
+
+
+
+prepare_base_model:
+  root_dir: artifacts/prepare_base_model 
+  base_model_path: artifacts/prepare_base_model/base_model.txt
+  #updated_base_model_path: artifacts/prepare_base_model/base_model_updated.h5
+
+
+training:
+  root_dir: artifacts/training
+  base_model_path: artifacts/prepare_base_model/base_model.txt
+  trained_model_path: artifacts/training/model.txt
+  local_data_file: artifacts/data_ingestion/data.csv
+  root_dir_train : artifacts/data_ingestion/train.csv
+  root_dir_test : artifacts/data_ingestion/test.csv
