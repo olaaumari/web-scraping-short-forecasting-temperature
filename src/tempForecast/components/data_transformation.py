@@ -1,4 +1,3 @@
-# this script aim to transform data collecting from scraping in sql lite data base
 import sqlite3
 import pandas as pd
 
@@ -75,10 +74,8 @@ class WeatherDatabase:
     
     def transform_data(self, df):
         dtf = DatetimeFeatures(
-            # the datetime variable
             variables="index",
             
-            # the features we want to create
             features_to_extract=[
                 "month",
                 "week",
@@ -93,7 +90,6 @@ class WeatherDatabase:
     def split_train_test(self, df):
         df.index = pd.to_datetime(df.index)
         threshold_time = df.index.max() - pd.Timedelta(hours=168)
-        # Split the dataframe
         train = df[df.index <= threshold_time]
         test = df[df.index > threshold_time]
 

@@ -14,9 +14,7 @@ class PrepareBaseModel:
 
     @staticmethod
     def save_model(path: Path, model):
-        # Ensure the path is a Path object, not just a string
         if isinstance(path, str):
             path = Path(path)
-        # Create directories if they do not exist
         path.parent.mkdir(parents=True, exist_ok=True)
         joblib.dump(model, path)

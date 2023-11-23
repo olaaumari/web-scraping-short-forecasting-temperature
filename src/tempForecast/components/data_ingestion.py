@@ -39,12 +39,9 @@ class weather_scraping:
             response = requests.get(URL, headers=headers)
             soup = BeautifulSoup(response.content, "html.parser")
 
-            # Extraire toutes les lignes de la table en une seule fois
             rows = soup.select("#resptable-releves > tbody:nth-child(2) > tr")
 
-            # Ici, vous pouvez continuer avec le reste du traitement pour chaque jour...
 
-            # Initialiser les listes
             (
                 dates,
                 hours,
@@ -59,9 +56,7 @@ class weather_scraping:
                 radiations_solaires,
             ) = ([] for _ in range(11))
 
-            # Parcourir chaque ligne et extraire les informations
             for row in rows:
-                # Extraction de la date et de l'heure
                 date_elements = row.find_all(class_="tipsy-trigger")
                 date_text = "Date not found."
                 hour_text = np.nan
@@ -77,7 +72,6 @@ class weather_scraping:
                 dates.append(date_text)
                 hours.append(hour_text)
 
-                # Extraction des autres données
                 temperatures.append(
                     row.select_one("td:nth-child(2) > span:nth-child(1)").text
                     if row.select_one("td:nth-child(2) > span:nth-child(1)")
@@ -150,7 +144,6 @@ class weather_scraping:
                 }
             )
 
-            # Convert columns to string type
             df["Date"] = df["Date"].astype(str)
             df["Heure"] = df["Heure"].astype(str)
             df["Température"] = df["Température"].astype(str)
@@ -173,17 +166,13 @@ class weather_scraping:
             df["Radiation solaire"] = df["Radiation solaire"].apply(to_float)
             df["Bio-météo"] = df["Bio-météo"].apply(to_float)
 
-            # Replace 'nan' strings back to np.nan
             df["Date"].replace("nan", np.nan, inplace=True)
             df["Heure"].replace("nan", np.nan, inplace=True)
 
-            # Combine the 'Date' and 'Heure' columns and remove ' UTC' from the end of 'Heure'
             df["Datetime"] = df["Date"] + " " + df["Heure"].str.replace(" UTC", "")
 
-            # Convert the combined string into a datetime object
             df["Datetime"] = pd.to_datetime(df["Datetime"], format="%d/%m/%Y %Hh%M")
 
-            # If you want to drop the original 'Date' and 'Heure' columns
             df.drop(["Date", "Heure"], axis=1, inplace=True)
 
             liste_de_df.append(df)

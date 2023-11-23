@@ -18,12 +18,9 @@ class Training:
 
     @staticmethod
     def save_model(path: Path, model):
-        # Vérifier le type du modèle (LightGBM ou autre)
         if isinstance(model, lgb.LGBMRegressor):
-            # Sauvegarder le modèle LightGBM
             model.save_model(str(path))
         else:
-            # Sauvegarder un modèle TensorFlow (ou autre)
             model.save(path)
 
     def train_model(self):
