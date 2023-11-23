@@ -48,7 +48,6 @@ def calculate_days_to_scrap(last_df: pd.DataFrame) -> int:
     try:
         #df_t.index = pd.to_datetime(df_t.index)
         last_df['Datetime'] = pd.to_datetime(last_df['Datetime'])
-        # Filtrez les dates antérieures à une certaine année, disons 2000, pour être sûr d'éliminer les valeurs erronées comme 1970
         filtered_dates = last_df[last_df.Datetime.dt.year > 2022].Datetime
 
         if not filtered_dates.empty:
@@ -56,7 +55,6 @@ def calculate_days_to_scrap(last_df: pd.DataFrame) -> int:
         else:
             last_date_in_df = today
     except:
-        # Si df_t n'est pas défini ou n'a pas la colonne 'Datetime', scraper à partir d'aujourd'hui.
         last_date_in_df = today
 
     days_to_scrape = (today - last_date_in_df).days
