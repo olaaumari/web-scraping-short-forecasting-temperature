@@ -1,36 +1,37 @@
 from tempForecast.config.configuration import ConfigurationManager
-from tempForecast.components.training import Training
+from tempForecast.components.base_model import PrepareBaseModel
 from tempForecast import logger
 
 from sklearn.multioutput import MultiOutputRegressor
 from sklearn.linear_model import Lasso
 
-STAGE_NAME = "Training"
 
 
-class ModelTrainingPipeline:
+STAGE_NAME = "Prepare base model"
+
+
+class PrepareBaseModelTrainingPipeline:
     def __init__(self):
         pass
 
     def main(self):
         config = ConfigurationManager()
-        training_config = config.get_training_config()
-        training = Training(config=training_config)
-        print("training", training)
+        prepare_base_model_config = config.get_prepare_base_model_config()
+        prepare_base_model = PrepareBaseModel(config=prepare_base_model_config)
 
-        # Model
         lasso = MultiOutputRegressor(Lasso(random_state=0, alpha=1))
 
-        training.get_base_model(lasso)
-        training.train_model()
-        
+        prepare_base_model.get_base_model(lasso)
+
+
+
 
 
 if __name__ == '__main__':
     try:
         logger.info(f"*******************")
         logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-        obj = ModelTrainingPipeline()
+        obj = PrepareBaseModelTrainingPipeline()
         obj.main()
         logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
     except Exception as e:
