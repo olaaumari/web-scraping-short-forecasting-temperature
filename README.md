@@ -1,6 +1,6 @@
 # Weather Forecast Project with Web Scraped Data
 
-This project aims to create a weather forecast application using web scraped data. The main objective is to develop deployment skills while providing a practical foundation for similar tasks
+This project aims to create a weather forecast application using web scraped data and a recursive Lasso model. The main objective is to develop deployment skills while providing a practical foundation for similar tasks.
 
 ## 🔧 Technologies Used
 
