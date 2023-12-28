@@ -47,3 +47,7 @@ Execute these commands if you're making changes or want to track data:
 # 📚 Further Reading
 Data Version Control [DVC Documentation](https://dvc.org/doc)
 
+
+# 🤝 Contribution & Feedback
+Feedback, issues, and pull requests are always welcome. For major changes, please open an issue first to discuss what you would like to change. Your contributions will help enhance the project further.
+
