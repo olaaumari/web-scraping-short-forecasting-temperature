@@ -44,3 +44,6 @@ Execute these commands if you're making changes or want to track data:
     dvc dag
 ```
 
+# 📚 Further Reading
+Data Version Control [DVC Documentation](https://dvc.org/doc)
+
