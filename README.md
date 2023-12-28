@@ -10,7 +10,7 @@ This project aims to create a weather forecast application using web scraped dat
 
 🚀 Quick Start
 Step 1: Clone the repository:
-''
+
 git clone https://github.com/olaaumari/web-scraping-short-forecasting-temperature.git
-''
+
 
