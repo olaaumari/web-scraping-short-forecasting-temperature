@@ -8,8 +8,8 @@ class PrepareBaseModel:
     def __init__(self, config: PrepareBaseModelConfig):
         self.config = config
 
-    def get_base_model(self):
-        self.model = lgb.LGBMRegressor()
+    def get_base_model(self, model):
+        self.model = model
         self.save_model(path=self.config.base_model_path, model=self.model)
 
     @staticmethod

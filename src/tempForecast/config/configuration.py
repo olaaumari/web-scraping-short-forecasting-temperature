@@ -6,7 +6,8 @@ from tempForecast.utils.common import read_yaml, create_directories
 from tempForecast.entity.config_entity import ( DataIngestionConfig,
                                                 PrepareBaseModelConfig,
                                                 TrainingConfig,
-                                                EvaluationConfig)
+                                                EvaluationConfig,
+                                                PredictionConfig)
 
 
 
@@ -81,3 +82,22 @@ class ConfigurationManager:
             test_data=Path("artifacts/data_ingestion/test.csv")
         )
         return eval_config
+
+    def get_prediction_config(self) -> PredictionConfig:
+        training = self.config.training
+        prediction = self.config.prediction
+        prepare_base_model = self.config.prepare_base_model
+        #params = self.params
+        training_data = self.config.data_ingestion.root_dir_train
+        create_directories([
+            Path(training.root_dir)
+        ])
+
+        prediction_config = PredictionConfig(
+            path_of_model=Path(training.base_model_path),
+            training_data=Path(training.root_dir_train),
+            test_data=Path(training.root_dir_test),
+            trained_model_path=Path(training.trained_model_path),
+           
+        )
+        return prediction_config

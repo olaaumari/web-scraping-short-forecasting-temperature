@@ -1,18 +1,10 @@
 import sqlite3
 import pandas as pd
-
-from feature_engine.creation import CyclicalFeatures
-from feature_engine.datetime import DatetimeFeatures
-from feature_engine.imputation import DropMissingData
-from feature_engine.selection import DropFeatures
-from feature_engine.timeseries.forecasting import (
-    LagFeatures,
-    WindowFeatures,
-)
+from tempForecast.components.pipeline_transformation import pipe
 
 # écrire la variable qui représente le dossier où on se trouve pour le mettre dans db_path
 class WeatherDatabase:
-    def __init__(self, db_path='weather_data.db'):
+    def __init__(self, db_path='research/weather_data.db'):
         self.conn = sqlite3.connect(db_path)
         self.create_table()
 
@@ -65,34 +57,37 @@ class WeatherDatabase:
 
 
         df.index = df['datetime']
-        #df = df.drop(columns=['id', 'datetime'])
         df.sort_index(inplace=True)
         
         df = pd.DataFrame(df)
 
         return df        
     
-    def transform_data(self, df):
-        dtf = DatetimeFeatures(
-            variables="index",
-            
-            features_to_extract=[
-                "month",
-                "week",
-                "day_of_week",
-                "day_of_month",
-                "hour",
-                "minute",
-                "weekend",
-            ],
-        )
     
     def split_train_test(self, df):
         df.index = pd.to_datetime(df.index)
-        threshold_time = df.index.max() - pd.Timedelta(hours=168)
-        train = df[df.index <= threshold_time]
-        test = df[df.index > threshold_time]
+        threshold_time = df.index.max() - pd.Timedelta(hours=48)
+        X_train = df[df.index < threshold_time]
+        X_test = df[df.index >= threshold_time - pd.offsets.Hour(48)]
 
-        return train, test
+        y_train = df[df.index < threshold_time][["température"]]
+        y_test = df[df.index >= threshold_time - pd.offsets.Hour(48)][[
+            "température"
+        ]]
+        
+
+        return X_train, X_test, y_train, y_test
     
+    def fit_transform_pipe(self, df):
+        df.index = pd.to_datetime(df.index)
+        X_train_t = pipe.fit_transform(df[['température','vent','rafales']])
+
+        return X_train_t
     
+    def transform_pipe(self, df):
+
+        df.index = pd.to_datetime(df.index)
+
+        X_test_t = pipe.fit_transform(df[['température','vent','rafales']])
+
+        return X_test_t

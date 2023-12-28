@@ -18,7 +18,7 @@ class weather_scraping:
     def __init__(self, last_df = None):
         self.HEADERS_LIST = HEADERS_LIST
         self.last_df = last_df
-        self.days_to_scrape = calculate_days_to_scrap(self.last_df) if self.last_df is not None else 5
+        self.days_to_scrape = calculate_days_to_scrap(self.last_df) if self.last_df is not None else 10
         
 
     def web_scraping(self):

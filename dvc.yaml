@@ -28,18 +28,22 @@ stages:
     always_changed: true
     outs:
       - artifacts/training/model.txt
-
-
   
-
-  evaluation:
-    cmd: python src/tempForecast/pipeline/stage_04_evaluation.py
+  prediction:
+    cmd: python src/tempForecast/pipeline/stage_04_prediction.py
     deps:
-      - src/tempForecast/pipeline/stage_04_evaluation.py
+      - src/tempForecast/pipeline/stage_04_prediction.py
       - config/config.yaml
+      - artifacts/data_ingestion/train.csv
       - artifacts/data_ingestion/test.csv
       - artifacts/training/model.txt
     always_changed: true
     metrics:
     - scores.json:
         cache: false
+    outs:
+      - graphique.png
+
+  
+
+ 

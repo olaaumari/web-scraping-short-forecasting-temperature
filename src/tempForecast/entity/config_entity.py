@@ -37,3 +37,11 @@ class EvaluationConfig:
     training_data: Path
     test_data: Path
     
+
+@dataclass(frozen=True)
+class PredictionConfig:
+    path_of_model: Path
+    training_data: Path
+    test_data: Path
+    trained_model_path : Path
+    

@@ -5,74 +5,74 @@ stages:
     deps:
     - path: config/config.yaml
       hash: md5
-      md5: 8f99da6091353aa6c7c201e96045b708
-      size: 785
+      md5: b3efe8c0c6d409927946250126b2ab99
+      size: 1110
     - path: src/tempForecast/pipeline/stage_01_data_ingestion.py
       hash: md5
-      md5: 24036d3db7370e8e715f801d1026301a
-      size: 1644
+      md5: 73fcb9869b8ebebfbbb8683d3af84a29
+      size: 2464
     outs:
     - path: artifacts/data_ingestion/data.csv
       hash: md5
-      md5: e8a20d4409d7e3ec1d250c2c8d23c6ab
-      size: 3869809
+      md5: da5700a63d14d38264841ba5be68d934
+      size: 2271362
   prepare_base_model:
     cmd: python src/tempForecast/pipeline/stage_02_prepare_base_model.py
     deps:
     - path: config/config.yaml
       hash: md5
-      md5: 8f99da6091353aa6c7c201e96045b708
-      size: 785
+      md5: b3efe8c0c6d409927946250126b2ab99
+      size: 1110
     - path: src/tempForecast/pipeline/stage_02_prepare_base_model.py
       hash: md5
-      md5: 5dc478086ec43ceb0881c81ec4ee5684
-      size: 1027
+      md5: f772023dae5f17049f337ab5703e553a
+      size: 1206
     outs:
     - path: artifacts/prepare_base_model
       hash: md5
-      md5: 7eb6eac4a8be4be6ead5c47575cfb136.dir
-      size: 650
+      md5: a1cc847c4d6eac000793f526d68f4423.dir
+      size: 345
       nfiles: 1
   training:
     cmd: python src/tempForecast/pipeline/stage_03_training.py
     deps:
     - path: artifacts/data_ingestion/train.csv
       hash: md5
-      md5: 3540e5be98ff497cfdee99873b927d0a
-      size: 5028227
+      md5: 321840ba08f6b1dd23be9429857e7507
+      size: 3524991
     - path: artifacts/prepare_base_model
       hash: md5
-      md5: 7eb6eac4a8be4be6ead5c47575cfb136.dir
-      size: 650
+      md5: a1cc847c4d6eac000793f526d68f4423.dir
+      size: 345
       nfiles: 1
     - path: config/config.yaml
       hash: md5
-      md5: 8f99da6091353aa6c7c201e96045b708
-      size: 785
+      md5: b3efe8c0c6d409927946250126b2ab99
+      size: 1110
     - path: src/tempForecast/pipeline/stage_03_training.py
       hash: md5
-      md5: d7c4217a1b70b9d98041dd160a61ca52
-      size: 951
+      md5: b017e59e177725054b4d6e17fca217e4
+      size: 1122
     outs:
     - path: artifacts/training/model.txt
       hash: md5
-      md5: 3ddec3b93706dd6be9b17875c2420d06
-      size: 295309
+      md5: 28fbd442411cae303afb9b12dc8e4ce4
+      size: 2111
   evaluation:
     cmd: python src/tempForecast/pipeline/stage_04_evaluation.py
     deps:
     - path: artifacts/data_ingestion/test.csv
       hash: md5
-      md5: 126aaf985f5743275b347302b90f0240
-      size: 31892
+      md5: 7b017c28d7985d9f303fa14bed9c5228
+      size: 15590
     - path: artifacts/training/model.txt
       hash: md5
-      md5: 3ddec3b93706dd6be9b17875c2420d06
-      size: 295309
+      md5: 47228f7d2027612ba164c214e947a79e
+      size: 2111
     - path: config/config.yaml
       hash: md5
-      md5: 8f99da6091353aa6c7c201e96045b708
-      size: 785
+      md5: b3efe8c0c6d409927946250126b2ab99
+      size: 1110
     - path: src/tempForecast/pipeline/stage_04_evaluation.py
       hash: md5
       md5: b93ef72cd304fcef6256b3a772697492
@@ -80,5 +80,37 @@ stages:
     outs:
     - path: scores.json
       hash: md5
-      md5: 1a884bddf2348e30557fb2bb61497180
-      size: 103
+      md5: c747c73c32739231eac1b07ef381c534
+      size: 68
+  prediction:
+    cmd: python src/tempForecast/pipeline/stage_04_prediction.py
+    deps:
+    - path: artifacts/data_ingestion/test.csv
+      hash: md5
+      md5: affddcf2b2b9a28c63269690e03b179e
+      size: 15597
+    - path: artifacts/data_ingestion/train.csv
+      hash: md5
+      md5: 321840ba08f6b1dd23be9429857e7507
+      size: 3524991
+    - path: artifacts/training/model.txt
+      hash: md5
+      md5: 28fbd442411cae303afb9b12dc8e4ce4
+      size: 2111
+    - path: config/config.yaml
+      hash: md5
+      md5: b3efe8c0c6d409927946250126b2ab99
+      size: 1110
+    - path: src/tempForecast/pipeline/stage_04_prediction.py
+      hash: md5
+      md5: d217b39873db1bef3e74685624f96f49
+      size: 278
+    outs:
+    - path: graphique.png
+      hash: md5
+      md5: cf8c725cb05b56a91e5e314eb9dfee82
+      size: 33296
+    - path: scores.json
+      hash: md5
+      md5: 27975ffa8a8db6f0e8358000a6c5712c
+      size: 68

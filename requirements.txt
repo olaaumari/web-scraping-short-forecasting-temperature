@@ -24,4 +24,5 @@ ensure
 python-box
 pyYAML
 dvc
+sktime
 -e .
