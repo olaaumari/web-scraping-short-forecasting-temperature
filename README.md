@@ -24,3 +24,22 @@ conda create -n weather-forecast python=3.8 -y
 ```bash
 conda activate weather-forecast
 ```
+
+## Step 3: Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+## Step 4: Run the DVC pipeline:
+```bash
+dvc repro
+```
+
+
+# DVC Commands:
+```bash
+    dvc init
+    dvc repro
+    dvc dag
+```
+
