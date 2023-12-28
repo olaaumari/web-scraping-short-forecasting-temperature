@@ -8,10 +8,19 @@ This project aims to create a weather forecast application using web scraped dat
 - Docker for containerizing the application.
 - Python for backend logic and ML model training.
 
-🚀 Quick Start
+## 🚀 Quick Start
 Step 1: Clone the repository:
 
 ```bash
 git clone https://github.com/olaaumari/web-scraping-short-forecasting-temperature.git
 ```
+## Step 2: Set up a Python environment:
+Using conda, create and activate an environment:
 
+
+```bash
+conda create -n weather-forecast python=3.8 -y
+```
+```bash
+conda activate weather-forecast
+```
